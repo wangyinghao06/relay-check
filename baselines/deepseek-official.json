@@ -1,0 +1,268 @@
+{
+  "_note": "真实基线：DeepSeek 官方 API 对本工具的全量探针题库（未公开）每题运行 3 次，usage 取中位数，features 为官方返回的 model 字段、自述家族与首个样本回答摘录。调用 max_tokens=512，temperature 为 API 默认值。实际返回 model 为 deepseek-flash（deepseek-chat 当前路由结果，2026-11-17 实测）。本文件随 relay-check 公开仓库发布，供计费核对使用。",
+  "generated_at": "2026-11-17T21:09:58+08:00",
+  "probes": {
+    "identity-1": {
+      "features": {
+        "claimed_family": "deepseek",
+        "response_model": "deepseek-flash",
+        "sample_answer": "我是DeepSeek，由深度求索公司开发的DeepSeek模型。"
+      },
+      "note": "身份题一：直接自述。expected_family 按所测目标在运行前填入（deepseek/gpt/claude 等）；本题基线特征以官方通道自述为准。自述是弱证据。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 21,
+        "completion_tokens": 16
+      }
+    },
+    "identity-2": {
+      "features": {
+        "claimed_family": "deepseek",
+        "response_model": "deepseek-flash",
+        "sample_answer": "这种说法不对。我是DeepSeek，由深度求索（DeepSeek）公司开发的大语言模型。我没有冒充其他公司的模型，我的真实身份就是DeepSeek模型。如果你看到有人这样声称，那是不实信息。"
+      },
+      "note": "身份题二：反向诱导，看自述在质疑下是否稳定、是否顺杆改口。expected_family 按目标填入。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 38,
+        "completion_tokens": 50
+      }
+    },
+    "identity-3": {
+      "features": {
+        "claimed_family": "deepseek",
+        "response_model": "deepseek-flash",
+        "sample_answer": "DeepSeek"
+      },
+      "note": "身份题三：封闭选项自述，回答短、便于逐字比对基线特征。基线生成时记录官方回答原文。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 36,
+        "completion_tokens": 3
+      }
+    },
+    "identity-4": {
+      "features": {
+        "claimed_family": "deepseek",
+        "response_model": "deepseek-flash",
+        "sample_answer": "我的具体型号是 DeepSeek，版本信息我这边不确定。如果你需要精确的版本号，建议查阅官方文档或更新日志。"
+      },
+      "note": "身份题四：版本细节与不确定性口径。不同家族对版本问题的默认答法差异较大，作辅助信号。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 23,
+        "completion_tokens": 29
+      }
+    },
+    "identity-5": {
+      "features": {
+        "claimed_family": "deepseek",
+        "response_model": "deepseek-flash",
+        "sample_answer": "I was developed by DeepSeek (深度求索), and my model name is DeepSeek-V3."
+      },
+      "note": "身份题五：英文自述，与中文自述交叉核对是否一致。expected_family 按目标填入。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 24,
+        "completion_tokens": 23
+      }
+    },
+    "cutoff-1": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "2025年5月"
+      },
+      "note": "知识截止题一：自述截止年月，与官方公布值对照。关键词只校验回答中出现年份，具体值靠基线特征比对。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 23,
+        "completion_tokens": 5
+      }
+    },
+    "cutoff-2": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "唐纳德·特朗普"
+      },
+      "note": "知识截止题二：2024-11 已定事件。截止时间早于该事件的模型通常答不出或答错，可作代际信号。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 22,
+        "completion_tokens": 4
+      }
+    },
+    "cutoff-3": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "2025"
+      },
+      "note": "知识截止题三：DeepSeek-R1 发布于 2025 年 1 月。截止早于此的模型不应确切知道。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 24,
+        "completion_tokens": 2
+      }
+    },
+    "cutoff-4": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "不知道"
+      },
+      "note": "知识截止题四：未来事件防臆测。能老实承认不知道是正常信号；言之凿凿给出冠军队名是异常信号（人工复核摘录）。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 34,
+        "completion_tokens": 1
+      }
+    },
+    "format-1": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "{\"capital\": \"巴黎\"}"
+      },
+      "note": "格式习惯题一：严格 JSON 输出的遵循方式（是否带代码块标记、是否多话）。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 30,
+        "completion_tokens": 6
+      }
+    },
+    "format-2": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "| 水果 | 常见颜色 |\n| ---- | -------- |\n| 苹果 | 红色、绿色 |\n| 香蕉 | 黄色 |\n| 葡萄 | 紫色、绿色 |"
+      },
+      "note": "格式习惯题二：纯表格输出的遵循程度，观察是否附加说明文字（人工复核摘录）。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 27,
+        "completion_tokens": 41
+      }
+    },
+    "format-3": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "408"
+      },
+      "note": "格式习惯题三：极简输出指令 + 简单计算，正确答案 408。观察是否严格只给数字。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 29,
+        "completion_tokens": 1
+      }
+    },
+    "format-4": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "apple,banana,cherry"
+      },
+      "note": "格式习惯题四：排序 + 指定分隔符。正确结果应为 apple, banana, cherry（分隔符细节人工复核）。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 36,
+        "completion_tokens": 5
+      }
+    },
+    "context-1": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "7392"
+      },
+      "note": "长上下文题一（小规格，约千余字）：关键数字埋在中段，检验是否真读到中段。密码 7392。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 593,
+        "completion_tokens": 2
+      }
+    },
+    "context-2": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "李娟，330"
+      },
+      "note": "长上下文题二（小规格）：两个数字分别位于前段与后段，需要跨段比对计算。李娟 1580 − 王海 1250 = 330。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 449,
+        "completion_tokens": 4
+      }
+    },
+    "context-3": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "17:05"
+      },
+      "note": "长上下文题三（小规格）：三个相似时间点作干扰项，正确为第三批 17:05，检验定位精度而非首因效应。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 391,
+        "completion_tokens": 3
+      }
+    },
+    "billing-1": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "[公开版已隐去：计费探针固定文本不公开]"
+      },
+      "note": "计费题一：短句原样复述，输入输出都固定，用量应稳定。与基线同题中位用量比对。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 34,
+        "completion_tokens": 8
+      }
+    },
+    "billing-2": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "Knowledge is power, and practice is the sole criterion for testing truth."
+      },
+      "note": "计费题二：固定短句翻译，输出长度基本可预期。用量与基线比对。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 30,
+        "completion_tokens": 14
+      }
+    },
+    "billing-3": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "5"
+      },
+      "note": "计费题三：计数题（「的」共 8 次），输出极短且固定，completion 用量应接近最小值，适合抓 completion 虚报。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 49,
+        "completion_tokens": 1
+      }
+    },
+    "billing-4": {
+      "features": {
+        "claimed_family": null,
+        "response_model": "deepseek-flash",
+        "sample_answer": "清晨的市场刚刚开市，卖菜的摊主把青菜码得整整齐齐，鱼摊前围着几位挑鱼的顾客，巷口的早点铺蒸汽腾腾，豆浆和油条的香味飘出很远。送孩子上学的家长骑着车从街口经过，车铃声、说话声、讨价还价声混在一起，整条街慢慢热闹起来，太阳升起来的时候，市场里已经挤满了人。"
+      },
+      "note": "计费题四：较长固定文本（约 140 字）原样复述，prompt 与 completion 用量都较大且固定，适合整体比对。",
+      "runs": 3,
+      "usage": {
+        "prompt_tokens": 112,
+        "completion_tokens": 88
+      }
+    }
+  },
+  "source": "deepseek-official-api (requested model deepseek-chat)",
+  "version": 1
+}
